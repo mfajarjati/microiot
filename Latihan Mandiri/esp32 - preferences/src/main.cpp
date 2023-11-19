@@ -1,0 +1,58 @@
+#include <Arduino.h>
+#include <Preferences.h>
+
+// #define STRING_DEMO_ENABLE
+
+#define STORAGE_NAME "storage"
+#define LED_STATUS_KEY "led"
+#define SSID_KEY "ssid"
+#define BUTTON_PIN 21
+
+bool ledStatus = LOW;
+bool changeLedStatus = false;
+portMUX_TYPE gpioIntMux = portMUX_INITIALIZER_UNLOCKED;
+
+Preferences storage;
+String ssid;
+uint32_t dataIndex = 0;
+
+void IRAM_ATTR gpioISR()
+{
+  portENTER_CRITICAL(&gpioIntMux);
+  changeLedStatus = true;
+  portEXIT_CRITICAL(&gpioIntMux);
+}
+
+void setup()
+{
+  // put your setup code here, to run once:
+  pinMode(BUTTON_PIN, INPUT_PULLUP);
+  pinMode(BUILTIN_LED, OUTPUT);
+  attachInterrupt(BUTTON_PIN, &gpioISR, FALLING);
+
+  Serial.begin(9600);
+
+  // Initialize Preferences and read LED status
+  storage.begin(STORAGE_NAME);
+  delay(100);
+  ledStatus = storage.getBool(LED_STATUS_KEY);
+  digitalWrite(BUILTIN_LED, ledStatus);
+}
+
+void loop()
+{
+  // put your main code here, to run repeatedly:
+  if (changeLedStatus)
+  {
+    portENTER_CRITICAL(&gpioIntMux);
+    changeLedStatus = false;
+    portEXIT_CRITICAL(&gpioIntMux);
+
+    ledStatus = !ledStatus;
+    digitalWrite(BUILTIN_LED, ledStatus);
+
+    storage.begin(STORAGE_NAME);
+    storage.putBool(LED_STATUS_KEY, ledStatus);
+    storage.end();
+  }
+}

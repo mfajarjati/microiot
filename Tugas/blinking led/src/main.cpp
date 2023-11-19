@@ -24,55 +24,31 @@ void loop()
       Serial.print("angka yang dimasukkan : ");
       Serial.println(data);
       digitalWrite(BUILTIN_LED, HIGH);
-      digitalWrite(pin_led_4, LOW);
-      digitalWrite(pin_led_16, LOW);
-      digitalWrite(pin_led_17, LOW);
       delay(2000);
       digitalWrite(BUILTIN_LED, LOW);
-      digitalWrite(pin_led_4, LOW);
-      digitalWrite(pin_led_16, LOW);
-      digitalWrite(pin_led_17, LOW);
     }
     else if (data == '2')
     {
       Serial.print("angka yang dimasukkan : ");
       Serial.println(data);
-      digitalWrite(BUILTIN_LED, LOW);
       digitalWrite(pin_led_4, HIGH);
-      digitalWrite(pin_led_16, LOW);
-      digitalWrite(pin_led_17, LOW);
       delay(2000);
-      digitalWrite(BUILTIN_LED, LOW);
       digitalWrite(pin_led_4, LOW);
-      digitalWrite(pin_led_16, LOW);
-      digitalWrite(pin_led_17, LOW);
     }
     else if (data == '3')
     {
       Serial.print("angka yang dimasukkan : ");
       Serial.println(data);
-      digitalWrite(BUILTIN_LED, LOW);
-      digitalWrite(pin_led_4, LOW);
       digitalWrite(pin_led_16, HIGH);
-      digitalWrite(pin_led_17, LOW);
       delay(2000);
-      digitalWrite(BUILTIN_LED, LOW);
-      digitalWrite(pin_led_4, LOW);
       digitalWrite(pin_led_16, LOW);
-      digitalWrite(pin_led_17, LOW);
     }
     else if (data == '4')
     {
       Serial.print("angka yang dimasukkan : ");
       Serial.println(data);
-      digitalWrite(BUILTIN_LED, LOW);
-      digitalWrite(pin_led_4, LOW);
-      digitalWrite(pin_led_16, LOW);
       digitalWrite(pin_led_17, HIGH);
       delay(2000);
-      digitalWrite(BUILTIN_LED, LOW);
-      digitalWrite(pin_led_4, LOW);
-      digitalWrite(pin_led_16, LOW);
       digitalWrite(pin_led_17, LOW);
     }
     else
