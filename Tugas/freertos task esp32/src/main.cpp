@@ -14,8 +14,8 @@ BH1750 lightMeter;
 
 DHT dht(DHT_PIN, DHT_TYPE);
 
-const char *ssid = "Pe";
-const char *password = "1w3r5y7i";
+const char *ssid = "Wifi name";
+const char *password = "wifi password";
 int lastRequest = 0;
 const size_t capacity = JSON_OBJECT_SIZE(2);
 char message[1024];
@@ -89,7 +89,7 @@ void telegramTask(void *parameter)
 
     String pesan = "Light = " + String(lux) + " lx\nTemperature = " + String(tempFloat) + " °C\nHumidity = " + String(humidFloat) + " %";
 
-    doc["chat_id"] = 5656754523;
+    doc["chat_id"] = "chatID";
     doc["text"] = pesan.c_str();
 
     serializeJson(doc, message);
@@ -135,7 +135,7 @@ void setupWifi()
 void teleSendMessage(String payload)
 {
   ESP_LOGI("TELE", "HTTP Payload: %s", payload.c_str());
-  http.begin("https://api.telegram.org/bot6463878279:AAHjPa9egdSbvbc63xhMetcfj5gvUiwmtIQ/sendMessage");
+  http.begin("https://api.telegram.org/bot"tokenAPItelegram"/sendMessage");
   http.addHeader("Content-Type", "application/json");
   int httpResponseCode = http.POST(payload);
 
